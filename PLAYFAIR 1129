@@ -1,0 +1,101 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+using namespace std;
+
+class Playfair {
+	char mTable[25];
+	string mPair;
+	string mKey;
+public:
+	Playfair(string mKey, string mPair);
+	void makeTable();
+	void showTable();
+	string makeEncryption(string mEncryption);
+};
+
+Playfair::Playfair(string mKey, string mPair) {
+	this->mKey = mKey;
+	this->mPair = mPair;
+}
+
+void Playfair::makeTable(char text[]) {
+	char key[25] = { 0, };
+	char key2[25] = { 0, };
+	char key3[25] = { 0, };
+	char A = 'a';
+	int count = 0, ck = 0;
+
+	strcpy(key, mKey.c_str());
+	int len = mKey.length();
+	
+	//키값
+	cout << "키값은 : " << key << endl;
+	for (int i = 0; i < len; i++) {
+		ck = 0;
+		for (int j = 0; j < len; j++) {
+			if (key[i] == key2[j]) {
+				ck = 1;
+			}
+		}
+		if (ck == 0) {
+			key2[count++] = key[i];
+		}
+	}
+	cout << "중복 제거된 키값 : " << key2 << endl;
+
+	strcpy(mTable, key2);
+	len = strlen(key2);
+
+	for (int i = 0; i < len; i++) {
+		if (key2[i] == 'q') {
+			key2[len] = 'z';
+		}
+		else if (key2[i] == 'z') {
+			key2[len] = 'q';
+		}
+	}
+
+	//mTable 만들기
+	for (int i = len; i < 25; i++) {
+		for (int j = 0; j < len + 1; j++) {
+			if (A == key2[j]) {
+				A++;
+				j = -1;
+			}
+			if (A != key2[j]) {
+				mTable[i] = A;
+			}
+		}
+		if (mTable[i] >= 'a' && mTable[i] <= 'z') {
+			A++;
+		}
+	}
+	cout << endl << endl;
+
+	count = 0;
+	for(int i=0;)
+}
+
+void Playfair::showTable(){
+	// mTable에 있는 값들을 5 X 5 로 화면에 출력하시오.
+	for (int i = 0; i < 25; i++) {
+		cout << mTable[i] << " ";
+		if (i % 5 == 4) {
+			cout << endl;
+		}
+	}
+}
+
+string Playfair::makeEncryption(string mEncryption) {
+	return NULL;
+}
+
+
+int main() {
+	char text[64] = { 0, };
+	Playfair pfair("assasinator", "q/z");
+	cin >> text;
+
+	pfair.makeTable(text);
+	pfair.showTable();
+}
