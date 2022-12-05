@@ -37,6 +37,9 @@ void Playfair::makeTable() {
 			if (key[i] == key2[j]) {
 				ck = 1;
 			}
+			else if (key[i] == mPair[2]) {
+				ck = 1;
+			}
 		}
 		if (ck == 0) {
 			key2[count++] = key[i];
@@ -60,7 +63,7 @@ void Playfair::makeTable() {
 		for (int j = 0; j < len + 1; j++) {
 			if (A == key2[j]) {
 				A++;
-				j =-1;
+				j = -1;
 			}
 			else if (A == mPair[2]) {
 				A++;
@@ -183,7 +186,7 @@ string Playfair::makeEncryption(string mEncryption) {
 
 
 int main() {
-	Playfair pfair("assassinator", "a/c");
+	Playfair pfair("assassinator", "a/s");
 	pfair.makeTable();
 	pfair.showTable();
 	string mEncryption;
