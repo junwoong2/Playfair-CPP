@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string>
 using namespace std;
@@ -128,6 +129,11 @@ string Playfair::makeEncryption(string mEncryption) {
 			cout << " ";
 		}
 	}
+	for (int i = 0; i < strlen(txt);i++) {
+		if (txt[i] == mPair[2]) {
+			txt[i] = mPair[0];
+		}
+	}
 	cout << "\n";
 
 	//암호화 시작
@@ -136,11 +142,11 @@ string Playfair::makeEncryption(string mEncryption) {
 	int cnt2 = 0;
 	int n[100] = { 0, };
 
-	for (int i = 0; i <strlen(txt)+1; i++) {
-		for (int j = 0; j<strlen(mTable); j++) {
+	for (int i = 0; i < strlen(txt) + 1; i++) {
+		for (int j = 0; j < strlen(mTable); j++) {
 			if (txt[i] == mTable[j]) {
 				n[cnt++] = j;
-				cout << j<<" ";
+				cout << j << " ";
 			}
 		}
 	}
@@ -160,7 +166,7 @@ string Playfair::makeEncryption(string mEncryption) {
 				n[i + 1] = n[i + 1] + 1;
 			}
 		}
-		else if (n[i] % 5 == n[i + 1] % 5) {//같은 열일 경우 아래쪽으로 한칸 밀고 맨 끝일경우 맨 위쪽으로
+		else if (n[i] % 5 == n[i + 1] % 5 && n[i] != n[i + 1]) {//같은 열일 경우 아래쪽으로 한칸 밀고 맨 끝일경우 맨 위쪽으로
 			if (n[i] + 5 > 24) {
 				n[i] = n[i] - 20;
 			}
@@ -174,20 +180,20 @@ string Playfair::makeEncryption(string mEncryption) {
 				n[i + 1] = n[i + 1] + 5;
 			}
 		}
-		else if (n[i] % 5 != n[i + 1] % 5 && n[i] / 5 != n[i+1] / 5) {
+		else if (n[i] % 5 != n[i + 1] % 5 && n[i] / 5 != n[i + 1] / 5) {
 			if (n[i] % 5 > n[i + 1] % 5) {
 				int cnt2 = n[i] % 5 - n[i + 1] % 5;
 				n[i] = n[i] - cnt2;
 				n[i + 1] = n[i + 1] + cnt2;
 			}
-			else{
+			else {
 				int cnt3 = n[i + 1] % 5 - n[i] % 5;
 				n[i] = n[i] + cnt3;
 				n[i + 1] = n[i + 1] - cnt3;
 			}
 		}
 	}
-	
+
 	for (int i = 0; i < cnt; i++) {
 		cout << n[i] << " ";
 	}
@@ -195,13 +201,13 @@ string Playfair::makeEncryption(string mEncryption) {
 	for (int i = 0; i < cnt; i++) {
 		enc[i] = mTable[n[i]];
 	}
-	cout << "\n\n암호화된 문장은 : " << enc<< "\n";
+	cout << "\n\n암호화된 문장은 : " << enc << "\n";
 	return mEncryption;
 }
 
 
 int main() {
-	Playfair pfair("assassinator", "q/z");
+	Playfair pfair("assassinator", "a/s");
 	pfair.makeTable();
 	pfair.showTable();
 	string mEncryption;
